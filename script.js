@@ -3,22 +3,6 @@ const flashcardData = [
     { 
         question: "What is the formula for Newton's Second Law of Motion?", 
         answer: "\\[F = ma\\] where F is force, m is mass, and a is acceleration" 
-    },
-    { 
-        question: "What is the formula for kinetic energy?", 
-        answer: "\\[K = \\frac{1}{2}mv^2\\] where K is kinetic energy, m is mass, and v is velocity" 
-    },
-    { 
-        question: "What is the formula for gravitational potential energy near Earth's surface?", 
-        answer: "\\[U = mgh\\] where U is potential energy, m is mass, g is gravitational acceleration, and h is height" 
-    },
-    { 
-        question: "What is the formula for the period of a simple pendulum?", 
-        answer: "\\[T = 2\\pi\\sqrt{\\frac{L}{g}}\\] where T is period, L is length of the pendulum, and g is gravitational acceleration" 
-    },
-    { 
-        question: "What is the formula for the force of gravity between two masses?", 
-        answer: "\\[F = G\\frac{m_1m_2}{r^2}\\] where F is force, G is gravitational constant, m₁ and m₂ are masses, and r is distance between them" 
     }
 ];
 
@@ -134,52 +118,16 @@ function handleCardLeave(card) {
     }
 }
 
-function navigateCard(direction) {
-    const card = document.querySelector('.flashcard');
-    const isFlipped = card.classList.contains('flipped');
-    
-    if (isFlipped) {
-        card.classList.remove('flipped');
-    }
-    
-    // Add slide animation class
-    card.classList.add(direction === 'next' ? 'slide-left' : 'slide-right');
-    
-    setTimeout(() => {
-        if (direction === 'next') {
-            currentCardIndex = (currentCardIndex + 1) % cards.length;
-        } else {
-            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
-        }
-        updateCardDisplay();
-        
-        // Remove slide animation class after animation completes
-        setTimeout(() => {
-            card.classList.remove('slide-left', 'slide-right');
-        }, 300);
-    }, 300);
-}
-
 function updateCardDisplay() {
     const questionText = document.getElementById('question-text');
     const answerText = document.getElementById('answer-text');
-    const remainingCount = document.getElementById('remaining-count');
-
+    
     if (cards.length > 0) {
         questionText.textContent = cards[currentCardIndex].question;
-        answerText.innerHTML = cards[currentCardIndex].answer;
-        remainingCount.textContent = cards.length;
-        
-        // Wait for the content to be updated before rendering math
-        setTimeout(() => {
-            if (typeof MathJax !== 'undefined') {
-                MathJax.typesetPromise();
-            }
-        }, 0);
+        answerText.textContent = cards[currentCardIndex].answer;
     } else {
-        questionText.textContent = "No more cards to review!";
-        answerText.textContent = "You've completed all cards!";
-        remainingCount.textContent = "0";
+        questionText.textContent = 'No cards available';
+        answerText.textContent = 'Add some cards to get started';
     }
 }
 
@@ -229,24 +177,22 @@ function checkReviewQueue() {
 // Initialize the flashcard system
 document.addEventListener('DOMContentLoaded', () => {
     const card = document.querySelector('.flashcard');
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.flashcard-container');
     
-    // Add event listeners to the container for a larger hit area
-    container.addEventListener('mousemove', (e) => {
-        if (isInBoundingBox(card, e)) {
-            handleCardHover(card, e);
-        } else if (isHovering) {
-            handleCardLeave(card);
-        }
+    // Add click event to the card
+    card.addEventListener('click', (event) => {
+        flipCard(card, event);
     });
     
+    // Add mouse move event to the container
+    container.addEventListener('mousemove', (event) => {
+        handleCardHover(card, event);
+    });
+    
+    // Add mouse leave event to the container
     container.addEventListener('mouseleave', () => {
-        if (isHovering) {
-            handleCardLeave(card);
-        }
+        handleCardLeave(card);
     });
-    
-    card.addEventListener('click', (e) => flipCard(card, e));
     
     updateCardDisplay();
 });
