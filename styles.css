@@ -64,7 +64,7 @@ body {
 
 .flashcard {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     aspect-ratio: 1;
     perspective: 1500px;
     margin: 0 auto;
@@ -112,17 +112,27 @@ body {
     transform: rotateY(180deg);
 }
 
-#question-text,
-#answer-text {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
+.flashcard-content {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.flashcard-content p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0;
     color: var(--text-color);
     font-weight: 300;
 }
 
 .hint {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--hint-color);
     font-weight: 300;
     position: absolute;
@@ -144,4 +154,24 @@ body {
         -webkit-transform-style: preserve-3d !important;
         transform-style: preserve-3d !important;
     }
+}
+
+/* Update form styles to match */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 100px;
 } 
