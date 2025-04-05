@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Flashcard</title>
+  <title>Flashcard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     .form-container {
       max-width: 600px;
@@ -59,7 +73,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="form-container">
+    <div id="form-container" class="form-container">
       <form id="flashcardForm">
         <div class="form-group">
           <label for="question">Question</label>
@@ -72,8 +86,26 @@
         <button type="submit">Create Flashcard</button>
       </form>
     </div>
+    <div id="flashcard-container" class="flashcard-container" style="display: none;">
+      <div class="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <div class="flashcard-content">
+              <p id="question-text"></p>
+              <span class="hint">Click to flip</span>
+            </div>
+          </div>
+          <div class="flashcard-back">
+            <div class="flashcard-content">
+              <p id="answer-text"></p>
+              <span class="hint">Click to flip</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
+  <script src="script.js"></script>
   <script>
     document.getElementById('flashcardForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -81,12 +113,37 @@
       const question = document.getElementById('question').value;
       const answer = document.getElementById('answer').value;
       
-      // Store content in localStorage
-      localStorage.setItem('flashcardQuestion', question);
-      localStorage.setItem('flashcardAnswer', answer);
+      // Hide the form and show the flashcard
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('flashcard-container').style.display = 'block';
       
-      // Redirect to flashcard.html
-      window.location.href = 'flashcard.html';
+      // Update the flashcard content
+      document.getElementById('question-text').innerHTML = question;
+      document.getElementById('answer-text').innerHTML = answer;
+      
+      // Initialize the flashcard
+      const card = document.querySelector('.flashcard');
+      const container = document.querySelector('.flashcard-container');
+      
+      // Add click event to the card
+      card.addEventListener('click', (event) => {
+        flipCard(card, event);
+      });
+      
+      // Add mouse move event to the container
+      container.addEventListener('mousemove', (event) => {
+        handleCardHover(card, event);
+      });
+      
+      // Add mouse leave event to the container
+      container.addEventListener('mouseleave', () => {
+        handleCardLeave(card);
+      });
+      
+      // Render any math content
+      if (typeof MathJax !== 'undefined') {
+        MathJax.typesetPromise();
+      }
     });
   </script>
 </body>

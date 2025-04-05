@@ -1,25 +1,26 @@
 :root {
-    /* Light mode default colors */
-    --bg-color: #f8f8f7;
-    --card-bg: #ffffff;
-    --text-color: #333333;
+    /* Light mode colors (flipped) */
+    --bg-color: #ffffff;
+    --card-bg: #f5f5f5;
+    --text-color: #1a1a1a;
     --border-color: #e0e0e0;
-    --button-bg: #f0f0f0;
-    --button-hover: #e0e0e0;
+    --button-bg: #e0e0e0;
+    --button-hover: #d0d0d0;
     --button-text: #333333;
-    --hint-color: #999999;
+    --hint-color: #666666;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #202020;
-        --card-bg: #191919;
+        /* Dark mode colors (flipped) */
+        --bg-color: #1a1a1a;
+        --card-bg: #2d2d2d;
         --text-color: #ffffff;
-        --border-color: #333333;
-        --button-bg: #2a2a2a;
-        --button-hover: #333333;
+        --border-color: #404040;
+        --button-bg: #404040;
+        --button-hover: #505050;
         --button-text: #ffffff;
-        --hint-color: #666666;
+        --hint-color: #999999;
     }
 }
 
