@@ -5,24 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Flashcards</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <div class="container">
-    <div class="flashcard" onclick="flipCard(this)">
-      <div class="flashcard-inner">
-        <div class="flashcard-front">
-          <h2>Question</h2>
-          <p id="question-text">Loading question...</p>
-        </div>
-        <div class="flashcard-back">
-          <h2>Answer</h2>
-          <p id="answer-text">Loading answer...</p>
-          <div class="feedback-buttons">
-            <button onclick="handleFeedback('correct', event)">Got it right!</button>
-            <button onclick="handleFeedback('incorrect', event)">Need more practice</button>
+    <div class="navigation">
+      <button class="nav-button prev" onclick="navigateCard('prev')">❮</button>
+      <div class="flashcard" onclick="flipCard(this)">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <p id="question-text">Loading question...</p>
+            <span class="hint">Click to flip</span>
+          </div>
+          <div class="flashcard-back">
+            <p id="answer-text">Loading answer...</p>
+            <span class="hint">Click to flip</span>
           </div>
         </div>
       </div>
+      <button class="nav-button next" onclick="navigateCard('next')">❯</button>
     </div>
     <div class="progress">
       <p>Cards remaining: <span id="remaining-count">0</span></p>
