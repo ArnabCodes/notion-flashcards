@@ -13,8 +13,8 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Dark mode colors (flipped) */
-        --bg-color: #1a1a1a;
-        --card-bg: #2d2d2d;
+        --bg-color: #191919;
+        --card-bg: #202020;
         --text-color: #ffffff;
         --border-color: #404040;
         --button-bg: #404040;

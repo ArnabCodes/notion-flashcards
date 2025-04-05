@@ -119,6 +119,7 @@ function handleCardLeave(card) {
 }
 
 function updateCardDisplay() {
+    
     const questionText = document.getElementById('question-text');
     const answerText = document.getElementById('answer-text');
     
